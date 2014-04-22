@@ -1,7 +1,7 @@
 fb-utils
 ========
 
-Scripts to manage Firebird databases
+Scripts para gerenciar bancos de dados Firebird
 
 - Gerenciamento dos bancos de dados por ambientes: dev/test/prod
 - Backup e restauração
