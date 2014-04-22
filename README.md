@@ -1,5 +1,5 @@
-fb-utils
-========
+Firebird Admin
+==============
 
 Scripts para gerenciar bancos de dados Firebird
 
