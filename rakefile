@@ -1,0 +1,36 @@
+ENV_FILE = "fb.env"
+DEFAULT_ENV = "dev"
+
+task :default => "help"
+
+task :help do
+  system('rake -T')
+end
+
+desc "env"
+task :env, [:env_name] do |t, args|
+  if args.env_name.nil?
+    load_env    
+  else
+    save_env args.env_name
+  end
+  puts "env = #{ENV['env_name']}"
+end
+
+def load_env
+  begin
+    File.open(ENV_FILE, "r") do |f|
+      line = f.gets.strip
+      ENV["env_name"] = line == "" ? DEFAULT_ENV : line
+    end
+  rescue 
+    ENV["env_name"] = DEFAULT_ENV
+  end
+end
+
+def save_env(name)
+  File.open(ENV_FILE, "w") do |f|
+    f.puts(name)
+    ENV["env_name"] = name
+  end
+end
