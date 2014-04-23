@@ -7,16 +7,6 @@ task :help do
   system('rake -T')
 end
 
-desc "env"
-task :env, [:env_name] do |t, args|
-  if args.env_name.nil?
-    load_env    
-  else
-    save_env args.env_name
-  end
-  puts "env = #{ENV['env_name']}"
-end
-
 def load_env
   begin
     File.open(ENV_FILE, "r") do |f|
@@ -34,3 +24,21 @@ def save_env(name)
     ENV["env_name"] = name
   end
 end
+
+desc "get or set env config"
+task :env, [:env_name] do |t, args|
+  if args.env_name.nil?
+    load_env    
+  else
+    save_env args.env_name
+  end
+  puts "env = #{ENV['env_name']}"
+end
+
+namespace :db do
+  desc "create a database"
+  task :create => :env do
+    system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey'; | isql -q"
+  end
+end
+
