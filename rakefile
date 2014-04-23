@@ -40,5 +40,10 @@ namespace :db do
   task :create => :env do
     system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey'; | isql -q"
   end
+
+  desc "backup a database"
+  task :backup => :env do
+    system %Q{gbak -b -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
+  end
 end
 
