@@ -43,7 +43,22 @@ namespace :db do
 
   desc "backup a database"
   task :backup => :env do
-    system %Q{gbak -b -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
+    system %Q{gbak -backup -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
+  end
+
+  desc "show info about a database"
+  task :info => :env do
+    system %Q{gstat -h "#{ENV['env_name']}.fdb"}
+  end
+
+  desc "restore a database (no replace)"
+  task :restore => :env do
+    system %Q{gbak -create -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
+  end
+
+  desc "replace a database (CAUTION)"
+  task :replace => :env do
+    system %Q{gbak -replace -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
   end
 end
 
