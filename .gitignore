@@ -1,1 +1,3 @@
 *.fdb
+*.fbk
+fb.env
