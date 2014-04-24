@@ -35,30 +35,27 @@ task :env, [:env_name] do |t, args|
   puts "env = #{ENV['env_name']}"
 end
 
-namespace :db do
-  desc "create a database"
-  task :create => :env do
-    system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey'; | isql -q"
-  end
-
-  desc "backup a database"
-  task :backup => :env do
-    system %Q{gbak -backup -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
-  end
-
-  desc "show info about a database"
-  task :info => :env do
-    system %Q{gstat -h "#{ENV['env_name']}.fdb"}
-  end
-
-  desc "restore a database (no replace)"
-  task :restore => :env do
-    system %Q{gbak -create -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
-  end
-
-  desc "replace a database (CAUTION)"
-  task :replace => :env do
-    system %Q{gbak -replace -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
-  end
+desc "create a database"
+task :create => :env do
+  system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey'; | isql -q"
 end
 
+desc "backup a database"
+task :backup => :env do
+  system %Q{gbak -backup -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
+end
+
+desc "show info about a database"
+task :info => :env do
+  system %Q{gstat -h "#{ENV['env_name']}.fdb"}
+end
+
+desc "restore a database (no replace)"
+task :restore => :env do
+  system %Q{gbak -create -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
+end
+
+desc "replace a database (CAUTION)"
+task :replace => :env do
+  system %Q{gbak -replace -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
+end
