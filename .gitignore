@@ -1,3 +1,4 @@
 *.fdb
 *.fbk
 fb.env
+db.config
