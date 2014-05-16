@@ -59,3 +59,8 @@ desc "replace a database (CAUTION)"
 task :replace => :env do
   system %Q{gbak -replace -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
 end
+
+desc "extract metadata"
+task :meta => :env do
+  system %Q{isql -x -o "#{ENV['env_name']}.sql" "#{ENV['env_name']}.fdb"}
+end
