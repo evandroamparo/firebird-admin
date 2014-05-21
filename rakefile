@@ -62,5 +62,9 @@ end
 
 desc "extract metadata"
 task :meta => :env do
-  system %Q{isql -x -o "#{ENV['env_name']}.sql" "#{ENV['env_name']}.fdb"}
+  sql = "#{ENV['env_name']}.sql"
+  if File.exists? sql
+    File.delete sql
+  end
+  system %Q{isql -x -o "#{sql}" "#{ENV['env_name']}.fdb"}
 end
