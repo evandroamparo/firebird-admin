@@ -68,3 +68,10 @@ task :meta => :env do
   end
   system %Q{isql -x -o "#{sql}" "#{ENV['env_name']}.fdb"}
 end
+
+desc "run SQL script"
+task :sql, [:script] => :env do |t, args|
+  if args.script.nil?
+    
+  end
+end
