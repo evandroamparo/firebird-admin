@@ -42,7 +42,7 @@ end
 
 desc "backup a database"
 task :backup => :env do
-  system %Q{gbak -backup -v "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
+  system %Q{gbak -backup -v -user sysdba -password masterkey "#{ENV['env_name']}.fdb" "#{ENV['env_name']}.fbk"}
 end
 
 desc "show info about a database"
@@ -52,12 +52,12 @@ end
 
 desc "restore a database (no replace)"
 task :restore => :env do
-  system %Q{gbak -create -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
+  system %Q{gbak -create -v -user sysdba -password masterkey "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
 end
 
 desc "replace a database (CAUTION)"
 task :replace => :env do
-  system %Q{gbak -replace -v "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
+  system %Q{gbak -replace -v -user sysdba -password masterkey "#{ENV['env_name']}.fbk" "#{ENV['env_name']}.fdb"}
 end
 
 desc "extract metadata"
@@ -66,12 +66,12 @@ task :meta => :env do
   if File.exists? sql
     File.delete sql
   end
-  system %Q{isql -x -o "#{sql}" "#{ENV['env_name']}.fdb"}
+  system %Q{isql -user sysdba -password masterkey -x -o "#{sql}" "#{ENV['env_name']}.fdb"}
 end
 
 desc "run SQL script"
 task :sql, [:script] => :env do |t, args|
-  if args.script.nil?
-    
+  if not args.script.nil?
+    system %Q{isql -user sysdba -password masterkey -i "#{args.script}" "#{ENV['env_name']}.fdb"} 
   end
 end
