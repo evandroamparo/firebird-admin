@@ -37,7 +37,7 @@ end
 
 desc "create a database"
 task :create => :env do
-  system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey'; | isql -q"
+  system "echo create database '#{ENV['env_name']}.fdb' page_size 16384 user 'sysdba' password 'masterkey' DEFAULT CHARACTER SET WIN1252; | isql -q"
 end
 
 desc "backup a database"
