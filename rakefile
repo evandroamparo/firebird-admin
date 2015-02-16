@@ -75,3 +75,9 @@ task :sql, [:script] => :env do |t, args|
     system %Q{isql -user sysdba -password masterkey -i "#{args.script}" "#{ENV['env_name']}.fdb"} 
   end
 end
+
+desc "verify database"
+task :verify => :env do
+  system %Q{gfix -v -f -user sysdba -password masterkey "#{ENV['env_name']}.fdb"}
+  # gfix -v -f "%bd%.fdb" -user sysdba -pass masterkey 
+end
