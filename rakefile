@@ -80,3 +80,12 @@ desc "verify database"
 task :verify => :env do
   system %Q{gfix -v -f -user sysdba -password masterkey "#{ENV['env_name']}.fdb"}
 end
+
+desc "recreate empty database"
+task :reset => :env do
+  fdb = "#{ENV['env_name']}.fdb"
+  if File.exists? fdb
+    File.delete fdb
+  end
+  Rake::Task[:create].invoke
+end
