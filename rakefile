@@ -81,6 +81,11 @@ task :verify => :env do
   system %Q{gfix -v -f -user sysdba -password masterkey "#{ENV['env_name']}.fdb"}
 end
 
+desc "fix database"
+task :fix => :env do
+  system %Q{gfix -mend -f -user sysdba -password masterkey "#{ENV['env_name']}.fdb"}
+end
+
 desc "recreate empty database"
 task :reset => :env do
   fdb = "#{ENV['env_name']}.fdb"
